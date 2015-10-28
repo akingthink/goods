@@ -27,11 +27,12 @@ class Goods_summarys_handler(tornado.web.RequestHandler):
         skip_cnt = (int(page) - 1) * 10
         goods_summarys = models.Goods_summarys.objects.skip(skip_cnt).limit(10)
         goods_last_updates = models.Goods_last_spider_logs.objects
-        goods_counts =models.Goods_newest_spider_logs.objects
+        goods_counts = models.Goods_newest_spider_logs.objects
         if not goods_summarys:
             self.redirect("/home")
             return
-        self.render("home.html", goods_summarys=goods_summarys, goods_last_updates=goods_last_updates, goods_counts=goods_counts)
+        self.render("home.html", goods_summarys=goods_summarys,
+                    goods_last_updates=goods_last_updates, goods_counts=goods_counts)
 
 
 class Goods_summarys_module(tornado.web.UIModule):
@@ -53,6 +54,7 @@ class Goods_counts_module(tornado.web.UIModule):
     def render(self, goods_count):
         return self.render_string("modules/goods_count.html", goods_count=goods_count)
 
+
 class Application(tornado.web.Application):
 
     def __init__(self):
@@ -63,8 +65,8 @@ class Application(tornado.web.Application):
         ]
 
         settings = {
-            'template_path': 'templates',
-            'static_path': 'static',
+            'template_path': os.path.join(os.path.dirname(__file__), "templates"),
+            'static_path': os.path.join(os.path.dirname(__file__), "static"),
             'ui_modules': {"Goods_summarys": Goods_summarys_module, "Goods_last_updates": Goods_last_updates_module,
                            "Goods_counts": Goods_counts_module},
             'debug': True
