@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/static/home.css">
+        <title>UI Module Example</title>
+    </head>
+    <body>
+        <div class="main_content">
+            <div class="main_left">
+                {% for goods_summary in goods_summarys %}
+                    {% module Goods_summarys(goods_summary) %}
+                {% end %}
+            </div>
+            <div class="main_right">
+                <div class="goods_last_updates">
+                    {% for goods_last_update in goods_last_updates%}
+                        {% module Goods_last_updates(goods_last_update) %}
+                    {% end %}
+                </div>
+                <div class="goods_counts">
+                    {% for goods_count in goods_counts  %}
+                        {% module Goods_counts(goods_count) %}
+                    {% end %}
+                </div>
+            </div>
+        </div>
+    </body>
+</html> 
