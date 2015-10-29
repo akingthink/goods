@@ -1,13 +1,13 @@
 <html>
     <head>
-        <link rel="stylesheet" href="static/home.css">
+        <link rel="stylesheet" href="static/goods_content.css">
         <title>米惠网</title>
     </head>
     <body>
         <div class="main_content">
             <div class="main_left">
-                {% for goods_summary in goods_summarys %}
-                    {% module Goods_summarys(goods_summary) %}
+                {% for goods_content in goods_contents %}
+                    {% module Goods_content(goods_content) %}
                 {% end %}
             </div>
             <div class="main_right">

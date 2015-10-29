@@ -1,0 +1,11 @@
+<div class="goods_content">
+    <div class="goods_content_title">
+        <a href="{{ goods_content.goods_url }}">
+            <span class="title">{{ goods_content.title }}</span>
+            <span class="sub_title">{{ goods_content.sub_title }}</span>
+        </a>
+    </div>
+    <div class="goods_content_main">
+        {% raw goods_content.content_main %}
+    </div>
+</div>

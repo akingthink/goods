@@ -1,14 +1,14 @@
 <div class="goods_summary">
     <div class="goods_summary_left">
         <div class="goods_ico">
-            <a href="/goods_summary/{{ goods_summary.goods_id }}">
+            <a href="/goods={{ goods_summary.goods_id }}">
                 <img src="{{ goods_summary.goods_ico }}" width="160px" height="160px">
             </a>
         </div>
     </div>
     <div class="goods_summary_center">
         <div class="goods_title">
-            <a class="title_url" href="/goods_summary/{{ goods_summary.goods_id }}">
+            <a class="title_url" href="/goods={{ goods_summary.goods_id }}">
             <span class="title">{{ goods_summary.goods_title}}</span>
             <span class="sub_title">{{ goods_summary.goods_sub_title }}</span>
             </a>

@@ -69,6 +69,7 @@ class Goods_spider_logs(mongoengine.Document):
         'ordering': ['-created_time']
     }
 
+
 class Goods_newest_spider_logs(mongoengine.Document):
     source = mongoengine.StringField()
     goods_count = mongoengine.IntField()
@@ -79,4 +80,3 @@ class Goods_newest_spider_logs(mongoengine.Document):
     meta = {
         'ordering': ['-created_time']
     }
-        
