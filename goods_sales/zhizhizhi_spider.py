@@ -71,7 +71,6 @@ class Zhizhizhi_spider(object):
         page = requests.get(url)
         soup = BeautifulSoup(page.content, "lxml")
         content_div = soup.find_all("div", "post_box")
-        pattern = re.compile('\d+')
         i = 0
         for item in content_div:
             goods_url_tag = item.find("a", href=re.compile('http://zhizhizhi.com/p/\d+/'))
@@ -101,6 +100,7 @@ class Zhizhizhi_spider(object):
                     self.goods_summarys.insert_one(goods_summary)
                     print goods_main_url
                     self.get_goods_detail(goods_main_url, goods_id)
+                    self.baseinfo.get_goods_shop(shop_name)
                 else:
                     break
         self.baseinfo.update_goods_last_spider_logs(

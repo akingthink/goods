@@ -4,6 +4,11 @@
         <title>米惠网</title>
     </head>
     <body>
+        <div class="shop_menu">
+            {% for goods_shop in goods_shops %}
+                {% module Goods_shops(goods_shop) %}
+            {% end %}
+        </div>
         <div class="main_content">
             <div class="main_left">
                 {% for goods_summary in goods_summarys %}

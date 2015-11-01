@@ -1,13 +1,8 @@
 # -*- coding:utf-8 -*-
 
-import urllib
-import urllib2
 import re
-import os
-from lxml import html
 import requests
 from bs4 import BeautifulSoup
-import pymongo
 import datetime
 import time
 import qiniu_tool
@@ -64,7 +59,6 @@ class Huiui_spider(object):
         page = requests.get(url)
         soup = BeautifulSoup(page.content, "lxml")
         content_div = soup.find_all("div", "module-hui-list-item1")
-        pattern = re.compile('\d+')
         i = 0
         for item in content_div:
             goods_url_tag = item.find("a", href=re.compile('/deals/\d+'))
@@ -98,6 +92,7 @@ class Huiui_spider(object):
                     self.goods_summarys.insert_one(goods_summary)
                     print goods_main_url
                     self.get_goods_detail(goods_main_url, goods_id)
+                    self.baseinfo.get_goods_shop(shop_name)
                 else:
                     break
         self.baseinfo.update_goods_last_spider_logs(

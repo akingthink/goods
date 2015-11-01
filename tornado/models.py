@@ -80,3 +80,11 @@ class Goods_newest_spider_logs(mongoengine.Document):
     meta = {
         'ordering': ['-created_time']
     }
+
+
+class Goods_shops(mongoengine.Document):
+    shop_code = mongoengine.StringField()
+    shop_name = mongoengine.StringField()
+    goods_count = mongoengine.StringField()
+    created_time = mongoengine.DateTimeField()
+    now = mongoengine.DateTimeField(default=datetime.datetime.now())

@@ -11,7 +11,6 @@ import tornado.httpserver
 import tornado.ioloop
 import tornado.options
 import tornado.web
-import unicodedata
 from tornado.options import define, options
 
 import sys
@@ -28,11 +27,13 @@ class Goods_summarys_handler(tornado.web.RequestHandler):
         goods_summarys = models.Goods_summarys.objects.skip(skip_cnt).limit(10)
         goods_last_updates = models.Goods_last_spider_logs.objects
         goods_counts = models.Goods_newest_spider_logs.objects
+        goods_shops = models.Goods_shops.objects.limit(10)
         if not goods_summarys:
             self.redirect("/")
             return
         self.render("home.html", goods_summarys=goods_summarys,
-                    goods_last_updates=goods_last_updates, goods_counts=goods_counts)
+                    goods_last_updates=goods_last_updates, goods_counts=goods_counts,
+                    goods_shops=goods_shops)
 
 
 class Goods_summarys_module(tornado.web.UIModule):
@@ -78,6 +79,12 @@ class Goods_content_module(tornado.web.UIModule):
         return self.render_string("modules/goods_content.html", goods_content=goods_content)
 
 
+class Goods_shops_module(tornado.web.UIModule):
+
+    def render(self, goods_shop):
+        return self.render_string("modules/shop_list.html", goods_shop=goods_shop)
+
+
 class Application(tornado.web.Application):
 
     def __init__(self):
@@ -92,7 +99,8 @@ class Application(tornado.web.Application):
             'template_path': os.path.join(os.path.dirname(__file__), "templates"),
             'static_path': os.path.join(os.path.dirname(__file__), "static"),
             'ui_modules': {"Goods_summarys": Goods_summarys_module, "Goods_last_updates": Goods_last_updates_module,
-                           "Goods_counts": Goods_counts_module, "Goods_content": Goods_content_module},
+                           "Goods_counts": Goods_counts_module, "Goods_content": Goods_content_module,
+                           "Goods_shops": Goods_shops_module},
             'debug': True
         }
 
