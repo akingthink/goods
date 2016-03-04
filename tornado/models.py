@@ -88,3 +88,7 @@ class Goods_shops(mongoengine.Document):
     goods_count = mongoengine.StringField()
     created_time = mongoengine.DateTimeField()
     now = mongoengine.DateTimeField(default=datetime.datetime.now())
+
+    meta = {
+        'ordering': ['-goods_count']
+    }

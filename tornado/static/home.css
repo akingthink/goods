@@ -5,6 +5,8 @@ body {
 a.title_url {
     text-decoration: none;
 }
+
+
 span.title {
     font-size: 20px;
     color: #808080;
@@ -13,11 +15,15 @@ span.sub_title {
     font-size: 16px;
     color: #808080;
 }
+
 .shop_menu {
-    width: 1100px;
-    overflow: hidden;
-    margin: 0 auto 0 auto;
+    background: #FFF;
+    float: left;
+    width: 840px;
+    display: inline;
+
 }
+
 
 .shop_list {
     float: left;
@@ -81,6 +87,10 @@ span.sub_title {
     margin: 7px;
 }
 
+.page_index {
+    float: right;
+    margin-top: 7px;
+}
 .goods_buy {
     margin-top: 86px;
 }
@@ -90,6 +100,6 @@ span.sub_title {
     background-color: #FFF;
 }
 .goods_last_updates {
-    margin: 7px;
+    margin: 0 7px 7px 7px;
     background-color: #FFF;
 }

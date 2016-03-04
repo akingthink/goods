@@ -1,19 +1,22 @@
 <html>
     <head>
-        <link rel="stylesheet" href="static/home.css">
+        <link rel="stylesheet" href="/static/home.css">
         <title>米惠网</title>
     </head>
     <body>
-        <div class="shop_menu">
-            {% for goods_shop in goods_shops %}
-                {% module Goods_shops(goods_shop) %}
-            {% end %}
-        </div>
         <div class="main_content">
             <div class="main_left">
+                <div class="shop_menu">
+                    {% for goods_shop in goods_shops %}
+                        {% module Goods_shops(goods_shop) %}
+                    {% end %}
+                </div>
                 {% for goods_summary in goods_summarys %}
                     {% module Goods_summarys(goods_summary) %}
                 {% end %}
+                <div class="page_index">
+                    {% module Page_index(page_count,page) %}
+                </div>
             </div>
             <div class="main_right">
                 <div class="goods_last_updates">

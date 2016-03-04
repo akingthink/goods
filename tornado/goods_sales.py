@@ -28,12 +28,14 @@ class Goods_summarys_handler(tornado.web.RequestHandler):
         goods_last_updates = models.Goods_last_spider_logs.objects
         goods_counts = models.Goods_newest_spider_logs.objects
         goods_shops = models.Goods_shops.objects.limit(10)
+        page_count = int(models.Goods_summarys.objects.count() / 10) + 1
         if not goods_summarys:
             self.redirect("/")
             return
+
         self.render("home.html", goods_summarys=goods_summarys,
                     goods_last_updates=goods_last_updates, goods_counts=goods_counts,
-                    goods_shops=goods_shops)
+                    goods_shops=goods_shops, page_count=page_count, page=page)
 
 
 class Goods_summarys_module(tornado.web.UIModule):
@@ -85,14 +87,39 @@ class Goods_shops_module(tornado.web.UIModule):
         return self.render_string("modules/shop_list.html", goods_shop=goods_shop)
 
 
+class Goods_shop_summary_handler(tornado.web.RequestHandler):
+
+    def get(self, shop_code, page=1):
+        skip_cnt = (int(page) - 1) * 10
+        shop_name_list = models.Goods_shops.objects(shop_code=str(shop_code))
+        shop_name = []
+        goods_last_updates = models.Goods_last_spider_logs.objects
+        goods_counts = models.Goods_newest_spider_logs.objects
+        goods_shops = models.Goods_shops.objects.limit(10)
+        for item in shop_name_list:
+            shop_name.append(item['shop_name'])
+        goods_summarys = models.Goods_summarys.objects(shop_name__in=shop_name).skip(skip_cnt).limit(10)
+        page_count = int(models.Goods_summarys.objects(shop_name__in=shop_name).count() / 10) + 1
+        self.render("home.html", goods_summarys=goods_summarys,
+                    goods_last_updates=goods_last_updates, goods_counts=goods_counts,
+                    goods_shops=goods_shops, page_count=page_count, page=page)
+
+
+class Page_index_module(tornado.web.UIModule):
+
+    def render(self, page_count, page):
+        return self.render_string("modules/page_index.html", page_count=page_count, page=page)
+
+
 class Application(tornado.web.Application):
 
     def __init__(self):
 
         handlers = [
             (r'/', Goods_summarys_handler),
-            (r'/page=([^/]+)', Goods_summarys_handler),
+            (r'/(\d+)', Goods_summarys_handler),
             (r'/goods=([^/]+)', Goods_detail_handler),
+            (r'/shop/([^/]+)/(\d+)', Goods_shop_summary_handler),
         ]
 
         settings = {
@@ -100,7 +127,7 @@ class Application(tornado.web.Application):
             'static_path': os.path.join(os.path.dirname(__file__), "static"),
             'ui_modules': {"Goods_summarys": Goods_summarys_module, "Goods_last_updates": Goods_last_updates_module,
                            "Goods_counts": Goods_counts_module, "Goods_content": Goods_content_module,
-                           "Goods_shops": Goods_shops_module},
+                           "Goods_shops": Goods_shops_module, "Page_index": Page_index_module},
             'debug': True
         }
 
